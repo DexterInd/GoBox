@@ -57,6 +57,34 @@ def send_bash_command_in_background(bashCommand):
 	# Fire off a bash command and forget about it.
 	write_debug(bashCommand)
 	process = subprocess.Popen(bashCommand.split())
+	
+def kill_all_open_processes():
+	p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
+	out, err = p.communicate()
+	# print out
+	for line in out.splitlines():
+		if 'squeakvm' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)			
+		if 'GoPiGoScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)
+			
+		if 'GrovePiScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)
+			
+		if 'BrickPiScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)	
 
 ########################################################################
 class MainPanel(wx.Panel):
@@ -148,33 +176,8 @@ class MainPanel(wx.Panel):
 		dlg = wx.MessageDialog(self, 'This will close any open Scratch programs.  Please save your work and click Ok!', 'Alert!', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
-		p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
-		out, err = p.communicate()
-		# print out
-		for line in out.splitlines():
-			if 'squeakvm' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)			
-			if 'GoPiGoScratch' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)
-				
-			if 'GrovePiScratch' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)
-				
-			if 'BrickPiScratch' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)	
-
+		kill_all_open_processes()  # Kills all open squeak, Scratch programs.
+		
 		folder = read_state()
 		if folder == 'BrickPi':
 			program = "/home/pi/Desktop/BrickPi_Scratch/BrickPiScratch.py"
@@ -201,6 +204,7 @@ class MainPanel(wx.Panel):
 		
 	def onClose(self, event):	# Close the entire program.
 		write_debug("Close Pressed.")
+		kill_all_open_processes()  # Kills all open squeak, Scratch programs.
 		"""
 		"""
 		self.frame.Close()
@@ -234,9 +238,11 @@ class Main(wx.App):
  
 #----------------------------------------------------------------------
 if __name__ == "__main__":
-	send_bash_command_in_background("xhost +")	
+	send_bash_command_in_background("xhost +")
 	write_debug(" # Program # started # !")
 	write_state("GoPiGo")
+	kill_all_open_processes()  # Kills all open squeak, Scratch programs.
+
 	# reset_file()	#Reset the file every time we turn this program on.
 	app = Main()
 	app.MainLoop()

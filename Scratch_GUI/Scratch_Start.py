@@ -60,6 +60,36 @@ def internet_on():
 	except urllib2.URLError as err: pass
 	return False
 
+	
+def kill_all_open_processes():
+	p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
+	out, err = p.communicate()
+	# print out
+	for line in out.splitlines():
+		if 'squeakvm' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)			
+		if 'GoPiGoScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)
+			
+		if 'GrovePiScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)
+			
+		if 'BrickPiScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)	
+
+
 ########################################################################
 class MainPanel(wx.Panel):
 	""""""
@@ -98,7 +128,7 @@ class MainPanel(wx.Panel):
 		about_button.Bind(wx.EVT_BUTTON, self.About)
 		
 		# Test Hardware
-		test_button = wx.Button(self, label="Test", pos=(50, 425))
+		test_button = wx.Button(self, label="Test", pos=(100, 425))
 		test_button.Bind(wx.EVT_BUTTON, self.test)
 		
 		# Exit
@@ -186,32 +216,8 @@ class MainPanel(wx.Panel):
 		dlg = wx.MessageDialog(self, 'This will close any open Scratch programs.  Please save and click Ok!', 'Alert!', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
-		p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
-		out, err = p.communicate()
-		# print out
-		for line in out.splitlines():
-			if 'squeakvm' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)			
-			if 'GoPiGoScratch' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)
-				
-			if 'GrovePiScratch' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)
-				
-			if 'BrickPiScratch' in line:
-				print line
-				pid = int(line.split(None, 2)[1])
-				kill_line = "sudo kill " + str(pid)
-				send_bash_command(kill_line)	
+
+		kill_all_open_processes()
 
 		folder = read_state()
 		if folder.find('BrickPi') >= 0:
@@ -370,6 +376,7 @@ class Main(wx.App):
 if __name__ == "__main__":
 	write_debug(" # Program # started # !")
 	write_state("GoPiGo")
+	kill_all_open_processes()
 	# reset_file()	#Reset the file every time we turn this program on.
 	app = Main()
 	app.MainLoop()
