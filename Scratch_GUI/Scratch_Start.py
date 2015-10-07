@@ -128,7 +128,7 @@ class MainPanel(wx.Panel):
 		about_button.Bind(wx.EVT_BUTTON, self.About)
 		
 		# Test Hardware
-		test_button = wx.Button(self, label="Test", pos=(100, 425))
+		test_button = wx.Button(self, label="Test", pos=(150, 425))
 		test_button.Bind(wx.EVT_BUTTON, self.test)
 		
 		# Exit
