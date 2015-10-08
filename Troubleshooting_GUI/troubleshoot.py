@@ -67,7 +67,7 @@ class MainPanel(wx.Panel):
 		dc.DrawBitmap(bmp, 200, 0)						# Absolute position of where to put the picture
 
 	def start_programming(self, event):
-		dlg = wx.MessageDialog(self, 'Starting the tests. This might take a few minutes to complete.', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'Starting the tests. This might take a few minutes to complete.  Power the GoPiGo with the battery pack.  Turn the GoPiGo Upside Down.', 'Update', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		
