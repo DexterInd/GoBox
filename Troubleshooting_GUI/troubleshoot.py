@@ -35,16 +35,16 @@ class MainPanel(wx.Panel):
 		# Standard Buttons
 		y=20
 		# Start Programming
-		start_programming = wx.Button(self, label="Troubleshoot GoPiGo", pos=(25,y))
-		start_programming.Bind(wx.EVT_BUTTON, self.start_programming)
+		troubleshoot_gopigo = wx.Button(self, label="Troubleshoot GoPiGo", pos=(25,y))
+		troubleshoot_gopigo.Bind(wx.EVT_BUTTON, self.troubleshoot_gopigo)
 		
-		# Open Examples
-		examples_button = wx.Button(self, label="Troubleshoot GrovePi", pos=(25, y+50))
-		examples_button.Bind(wx.EVT_BUTTON, self.examples)			
+		# Open GrovePi Tests
+		troubleshoot_grovepi = wx.Button(self, label="Troubleshoot GrovePi", pos=(25, y+50))
+		troubleshoot_grovepi.Bind(wx.EVT_BUTTON, self.examples)			
 		 
 		#Update Curriculum
-		curriculum_update = wx.Button(self, label="Demo GoPiGo", pos=(25,y+100))
-		curriculum_update.Bind(wx.EVT_BUTTON, self.curriculum_update)
+		demo_gopigo = wx.Button(self, label="Demo GoPiGo", pos=(25,y+100))
+		demo_gopigo.Bind(wx.EVT_BUTTON, self.demo_gopigo)
 
 		# Exit
 		exit_button = wx.Button(self, label="Exit", pos=(25,y+150))
@@ -66,19 +66,19 @@ class MainPanel(wx.Panel):
 		bmp = wx.Bitmap("/home/pi/Desktop/GoBox/Troubleshooting_GUI/dex.png")	# Draw the photograph.
 		dc.DrawBitmap(bmp, 200, 0)						# Absolute position of where to put the picture
 
-	def start_programming(self, event):
-		dlg = wx.MessageDialog(self, 'Starting the tests. This might take a few minutes to complete.  Power the GoPiGo with the battery pack.  Turn the GoPiGo Upside Down.', 'Update', wx.OK|wx.ICON_INFORMATION)
+	def troubleshoot_gopigo(self, event):
+		dlg = wx.MessageDialog(self, 'This program tests the GoPiGo for potential issues or problems and will make a log report you can send to Dexter Industries.  \n 1. Make sure the battery pack is connected to the GoPiGo and turn it on.  \n 2. Turn the GoPiGo upside down so the wheels are in the air for the test.  \n 3. Then click OK to begin the test.  \n It takes a few moments for the test to start, and once it has begun, it might take a few minutes to run through all the tests.', 'Update', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		
 		send_bash_command('sudo chmod +x /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
 		send_bash_command('sudo /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
 		
-		dlg = wx.MessageDialog(self, 'Tests Complete. Log has been saved to Desktop. Please copy it and send it by email or upload it on the forums', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'All tests are complete. The Log has been saved to Desktop. Please copy it and upload it into our Forums.  www.dexterindustries.com/Forum ', 'Ok', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 
-	def curriculum_update(self, event):
+	def demo_gopigo(self, event):
 		dlg = wx.MessageDialog(self, 'Demoing the GoPiGo. The LEDs should blink on the GoPiGo and it should move forward and back', 'Update', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
@@ -91,14 +91,14 @@ class MainPanel(wx.Panel):
 		dlg.Destroy()
 		
 	def examples(self, event):
-		dlg = wx.MessageDialog(self, 'Starting the tests. This might take a few minutes to complete.', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'This program tests the GrovePi for potential issues or problems and will make a log report you can send to Dexter Industries.  \n It takes a few moments for the test to start, and once it has begun, it might take a few minutes to run through all the tests.', 'Update', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 	
 		send_bash_command('sudo chmod +x /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
 		send_bash_command('sudo /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
 		
-		dlg = wx.MessageDialog(self, 'Tests Complete. Log has been saved to Desktop. Please copy it and send it by email or upload it on the forums', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'All tests are complete. The Log has been saved to Desktop. Please copy it and upload it into our Forums.  www.dexterindustries.com/Forum', 'OK', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		
