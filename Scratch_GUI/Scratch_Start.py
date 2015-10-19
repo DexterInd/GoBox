@@ -128,7 +128,7 @@ class MainPanel(wx.Panel):
 		about_button.Bind(wx.EVT_BUTTON, self.About)
 		
 		# Test Hardware
-		test_button = wx.Button(self, label="Test", pos=(150, 425))
+		test_button = wx.Button(self, label="Test", pos=(200, 425))
 		test_button.Bind(wx.EVT_BUTTON, self.test)
 		
 		# Exit
@@ -148,7 +148,7 @@ class MainPanel(wx.Panel):
 		
 		wx.StaticText(self, -1, "Select a Robot:", (25, 205))					# (Minus 50, minus 0)
 		
-		wx.StaticText(self, -1, "Caution: Do not close the terminal window!", (25, 510))
+		wx.StaticText(self, -1, "Caution: Do not close the LXTerminal window running \nin the background right now.", (25, 520))
 
 		# Drop Boxes
 		#-------------------------------------------------------------------
@@ -308,29 +308,73 @@ class MainPanel(wx.Panel):
 		folder = read_state()
 		if folder.find('BrickPi') >= 0:
 			# Run BrickPi Test.
-			dlg = wx.MessageDialog(self, 'Ok, start BrickPi Test. Make sure the BrickPi is powerd by batteries, a motor is connected, and a touch sensor is connected to Port 1.  You shold see the LEDs blink and the motors move when the touch sensor is pressed.  Then press Ok. ', 'Test BrickPi!', wx.OK|wx.ICON_INFORMATION)
-			dlg.ShowModal()
+			dlg = wx.MessageDialog(self, 'Ok, start BrickPi Test. Make sure the BrickPi is powerd by batteries, a motor is connected, and a touch sensor is connected to Port 1.  You shold see the LEDs blink and the motors move when the touch sensor is pressed.  Then press Ok. ', 'Test BrickPi!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+			ran_dialog = False
+			if dlg.ShowModal() == wx.ID_OK:
+				print "hello!"
+				program = "sudo python /home/pi/Desktop/BrickPi_Python/Brick_Hardware_Test.py"
+				send_bash_command_in_background(program)
+				ran_dialog = True
+			else:
+				print "Canceled!"
 			dlg.Destroy()
-			program = "sudo python /home/pi/Desktop/BrickPi_Python/Brick_Hardware_Test.py"
-			send_bash_command_in_background(program)
+			
+			# Depending on what the user chose, we either cancel or complete.  
+			if ran_dialog:
+				dlg = wx.MessageDialog(self, 'Test Complete.', 'Complete', wx.OK|wx.ICON_INFORMATION)
+				dlg.ShowModal()
+				dlg.Destroy()
+			else:
+				dlg = wx.MessageDialog(self, 'Test Canceled.', 'Canceled', wx.OK|wx.ICON_HAND)
+				dlg.ShowModal()
+				dlg.Destroy()
 
 		elif folder.find('GoPiGo') >= 0:
 			# Run GoPiGo Test.
-			dlg = wx.MessageDialog(self, 'Ok, start GoPiGo Test. Make sure the GoPiGo is powerd by batteries and is turned upside down.  You shold see the LEDs blink and the motors move.  Then press Ok. ', 'Test GoPiGo!', wx.OK|wx.ICON_INFORMATION)
-			dlg.ShowModal()
+			dlg = wx.MessageDialog(self, 'This test program will make sure everything is working on your GoPiGo.  \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the test.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+			ran_dialog = False
+			if dlg.ShowModal() == wx.ID_OK:
+				print "hello!"
+				program = "sudo python /home/pi/Desktop/GoPiGo/Software/Python/hardware_test_2.py"
+				send_bash_command_in_background(program)
+				ran_dialog = True
+			else:
+				print "Canceled!"
 			dlg.Destroy()
-			program = "sudo python /home/pi/Desktop/GoPiGo/Software/Python/hardware_test_2.py"
-			send_bash_command_in_background(program)
-
+			
+			# Depending on what the user chose, we either cancel or complete.  
+			if ran_dialog:
+				dlg = wx.MessageDialog(self, 'Demo Complete', 'Complete', wx.OK|wx.ICON_INFORMATION)
+				dlg.ShowModal()
+				dlg.Destroy()
+			else:
+				dlg = wx.MessageDialog(self, 'Demo Canceled', 'Canceled', wx.OK|wx.ICON_HAND)
+				dlg.ShowModal()
+				dlg.Destroy()
+				
 		else:
 			# Run GrovePi Test.
-			dlg = wx.MessageDialog(self, 'Ok, start GrovePi Test. Attach buzzer to D8 and a button to A0.  Press the button and the buzzer should sound.  Press Ok to start. ', 'Test GrovePi!', wx.OK|wx.ICON_INFORMATION)
-			dlg.ShowModal()
+			dlg = wx.MessageDialog(self, 'Ok, start GrovePi Test. Attach buzzer to D8 and a button to A0.  Press the button and the buzzer should sound.  Press Ok to start. ', 'Test GrovePi!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+			ran_dialog = False
+			if dlg.ShowModal() == wx.ID_OK:
+				print "hello!"
+				program = "sudo python /home/pi/Desktop/GrovePi/Software/Python/GrovePi_Hardware_Test.py"
+				send_bash_command_in_background(program)
+				ran_dialog = True
+			else:
+				print "Canceled!"
 			dlg.Destroy()
-			program = "sudo python /home/pi/Desktop/GrovePi/Software/Python/GrovePi_Hardware_Test.py"
-			send_bash_command_in_background(program)
-
-		
+			
+			# Depending on what the user chose, we either cancel or complete.  
+			if ran_dialog:
+				dlg = wx.MessageDialog(self, 'Test Complete', 'Complete', wx.OK|wx.ICON_INFORMATION)
+				dlg.ShowModal()
+				dlg.Destroy()
+			else:
+				dlg = wx.MessageDialog(self, 'Test Canceled', 'Canceled', wx.OK|wx.ICON_HAND)
+				dlg.ShowModal()
+				dlg.Destroy()
+				
 	def About(self, event):
 		write_debug("About Pressed.")	
 		dlg = wx.MessageDialog(self, 'Learn more about Dexter Industries and GoBox at dexterindustries.com', 'About', wx.OK|wx.ICON_INFORMATION)
