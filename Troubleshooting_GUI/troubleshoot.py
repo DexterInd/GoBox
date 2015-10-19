@@ -33,24 +33,30 @@ class MainPanel(wx.Panel):
 		
 		#-------------------------------------------------------------------
 		# Standard Buttons
-		y=20
-		# Start Programming
+		y=200
+		# Troubleshoot the GoPiGo
 		troubleshoot_gopigo = wx.Button(self, label="Troubleshoot GoPiGo", pos=(25,y))
 		troubleshoot_gopigo.Bind(wx.EVT_BUTTON, self.troubleshoot_gopigo)
+		wx.StaticText(self, -1, "This button runs a series of tests on the GoPiGo Hardware.", (175, y))
 		
-		# Open GrovePi Tests
-		troubleshoot_grovepi = wx.Button(self, label="Troubleshoot GrovePi", pos=(25, y+50))
-		troubleshoot_grovepi.Bind(wx.EVT_BUTTON, self.examples)			
-		 
-		#Update Curriculum
-		demo_gopigo = wx.Button(self, label="Demo GoPiGo", pos=(25,y+100))
+		# Troubleshoot the GrovePi
+		troubleshoot_grovepi = wx.Button(self, label="Troubleshoot GrovePi", pos=(25, y+75))
+		troubleshoot_grovepi.Bind(wx.EVT_BUTTON, self.grovepi)			
+		wx.StaticText(self, -1, "This button runs a series of tests on the GrovePi Hardware.", (175, y+75))
+		
+		# Demo the GoPiGo
+		demo_gopigo = wx.Button(self, label="Demo GoPiGo", pos=(25,y+150))
 		demo_gopigo.Bind(wx.EVT_BUTTON, self.demo_gopigo)
+		wx.StaticText(self, -1, "This button demonstrates the GoPiGo Hardware.", (175, y+150))
 
 		# Exit
-		exit_button = wx.Button(self, label="Exit", pos=(25,y+150))
+		exit_button = wx.Button(self, label="Exit", pos=(25,y+225))
 		exit_button.Bind(wx.EVT_BUTTON, self.onClose)
 		
-		wx.StaticText(self, -1, "Caution: Do not close the terminal window!", (25, y+200))
+		wx.StaticText(self, -1, "Caution: Do not close the LXTerminal window running in the background right now.", (25, y+275))
+		
+		
+		
 		self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)		# Sets background picture
  
 	#----------------------------------------------------------------------
@@ -64,44 +70,77 @@ class MainPanel(wx.Panel):
 			dc.SetClippingRect(rect)
 		dc.Clear()	
 		bmp = wx.Bitmap("/home/pi/Desktop/GoBox/Troubleshooting_GUI/dex.png")	# Draw the photograph.
-		dc.DrawBitmap(bmp, 200, 0)						# Absolute position of where to put the picture
+		dc.DrawBitmap(bmp, 10, 10)						# Absolute position of where to put the picture
 
+	###############################################################################
 	def troubleshoot_gopigo(self, event):
-		dlg = wx.MessageDialog(self, 'This program tests the GoPiGo for potential issues or problems and will make a log report you can send to Dexter Industries.  \n 1. Make sure the battery pack is connected to the GoPiGo and turn it on.  \n 2. Turn the GoPiGo upside down so the wheels are in the air for the test.  \n 3. Then click OK to begin the test.  \n It takes a few moments for the test to start, and once it has begun, it might take a few minutes to run through all the tests.', 'Update', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
+		dlg = wx.MessageDialog(self, 'This program tests the GoPiGo for potential issues or problems and will make a log report you can send to Dexter Industries.  \n 1. Make sure the battery pack is connected to the GoPiGo and turn it on.  \n 2. Turn the GoPiGo upside down so the wheels are in the air for the test.  \n 3. Then click OK to begin the test.  \n It takes a few moments for the test to start, and once it has begun, it might take a few minutes to run through all the tests.', 'Troubleshoot the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+		
+		ran_dialog = False
+		if dlg.ShowModal() == wx.ID_OK:
+			print "hello!"
+			send_bash_command('sudo chmod +x /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
+			send_bash_command('sudo /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
+			ran_dialog = True
+		else:
+			print "Canceled!"
 		dlg.Destroy()
 		
-		send_bash_command('sudo chmod +x /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
-		send_bash_command('sudo /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
-		
-		dlg = wx.MessageDialog(self, 'All tests are complete. The Log has been saved to Desktop. Please copy it and upload it into our Forums.  www.dexterindustries.com/Forum ', 'Ok', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
-		dlg.Destroy()
+		# Depending on what the user chose, we either cancel or complete.  
+		if ran_dialog:
+			dlg = wx.MessageDialog(self, 'All tests are complete. The Log has been saved to Desktop. Please copy it and upload it into our Forums.  www.dexterindustries.com/Forum ', 'Complete', wx.OK|wx.ICON_INFORMATION)
+			dlg.ShowModal()
+			dlg.Destroy()
+		else:
+			dlg = wx.MessageDialog(self, 'Troubleshoot GoPiGo Canceled', 'Canceled', wx.OK|wx.ICON_HAND)
+			dlg.ShowModal()
+			dlg.Destroy()
 
+	###############################################################################
 	def demo_gopigo(self, event):
-		dlg = wx.MessageDialog(self, 'Demoing the GoPiGo. The LEDs should blink on the GoPiGo and it should move forward and back', 'Update', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
+		dlg = wx.MessageDialog(self, 'This Demo program will make sure everything is working on your GoPiGo.  The red LEDs in the front of the GoPiGo will blink once, and the GoPiGo will move forward, and then backwards.  \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the demo.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+		ran_dialog = False
+		if dlg.ShowModal() == wx.ID_OK:
+			print "hello!"
+			send_bash_command('sudo python /home/pi/Desktop/GoPiGo/Software/Python/other_scripts/demo.py')
+			ran_dialog = True
+		else:
+			print "Canceled!"
 		dlg.Destroy()
+		
+		# Depending on what the user chose, we either cancel or complete.  
+		if ran_dialog:
+			dlg = wx.MessageDialog(self, 'Demo Complete', 'Complete', wx.OK|wx.ICON_INFORMATION)
+			dlg.ShowModal()
+			dlg.Destroy()
+		else:
+			dlg = wx.MessageDialog(self, 'Demo Canceled', 'Canceled', wx.OK|wx.ICON_HAND)
+			dlg.ShowModal()
+			dlg.Destroy()
+			
+	###############################################################################
+	def grovepi(self, event):
+		dlg = wx.MessageDialog(self, 'This program tests the GrovePi for potential issues or problems and will make a log report you can send to Dexter Industries.  \n It takes a few moments for the test to start, and once it has begun, it might take a few minutes to run through all the tests.', 'Troubleshoot the GrovePi', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+		ran_dialog = False
+		if dlg.ShowModal() == wx.ID_OK:
+			print "Running GrovePi Tests!"
+			send_bash_command('sudo chmod +x /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
+			send_bash_command('sudo /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
+			ran_dialog = True
+		else:
+			print "Canceled!"
+		dlg.Destroy()
+		
+		# Depending on what the user chose, we either cancel or complete.  
+		if ran_dialog:
+			dlg = wx.MessageDialog(self, 'All tests are complete. The Log has been saved to Desktop. Please copy it and upload it into our Forums.  www.dexterindustries.com/Forum', 'OK', wx.OK|wx.ICON_INFORMATION)
+			dlg.ShowModal()
+			dlg.Destroy()
+		else:
+			dlg = wx.MessageDialog(self, 'GrovePi Test Canceled', 'Canceled', wx.OK|wx.ICON_HAND)
+			dlg.ShowModal()
+			dlg.Destroy()
 
-	
-		send_bash_command('sudo python /home/pi/Desktop/GoPiGo/Software/Python/other_scripts/demo.py')
-
-		dlg = wx.MessageDialog(self, 'Demo Complete', 'Update', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
-		dlg.Destroy()
-		
-	def examples(self, event):
-		dlg = wx.MessageDialog(self, 'This program tests the GrovePi for potential issues or problems and will make a log report you can send to Dexter Industries.  \n It takes a few moments for the test to start, and once it has begun, it might take a few minutes to run through all the tests.', 'Update', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
-		dlg.Destroy()
-	
-		send_bash_command('sudo chmod +x /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
-		send_bash_command('sudo /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
-		
-		dlg = wx.MessageDialog(self, 'All tests are complete. The Log has been saved to Desktop. Please copy it and upload it into our Forums.  www.dexterindustries.com/Forum', 'OK', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
-		dlg.Destroy()
-		
 	def onClose(self, event):	# Close the entire program.
 		self.frame.Close()
   
@@ -114,7 +153,7 @@ class MainFrame(wx.Frame):
 
 		wx.Icon('/home/pi/Desktop/GoBox/Troubleshooting_GUI/favicon.ico', wx.BITMAP_TYPE_ICO)
 		wx.Log.SetVerbose(False)
-		wx.Frame.__init__(self, None, title="Test Dexter Industries Hardware", size=(600,250))		# Set the fram size
+		wx.Frame.__init__(self, None, title="Test and Troubleshoot Dexter Industries Hardware", size=(500,500))		# Set the fram size
 
 		panel = MainPanel(self)        
 		self.Center()
