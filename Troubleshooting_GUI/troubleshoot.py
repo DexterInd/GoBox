@@ -78,12 +78,12 @@ class MainPanel(wx.Panel):
 		
 		ran_dialog = False
 		if dlg.ShowModal() == wx.ID_OK:
-			print "hello!"
+			print "Start GoPiGo Test!"
 			send_bash_command('sudo chmod +x /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
 			send_bash_command('sudo /home/pi/Desktop/GoPiGo/Troubleshooting/all_tests.sh')
 			ran_dialog = True
 		else:
-			print "Canceled!"
+			print "Cancel GoPiGo Test!"
 		dlg.Destroy()
 		
 		# Depending on what the user chose, we either cancel or complete.  
@@ -101,11 +101,11 @@ class MainPanel(wx.Panel):
 		dlg = wx.MessageDialog(self, 'This Demo program will make sure everything is working on your GoPiGo.  The red LEDs in the front of the GoPiGo will blink once, and the GoPiGo will move forward, and then backwards.  \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the demo.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
 		ran_dialog = False
 		if dlg.ShowModal() == wx.ID_OK:
-			print "hello!"
+			print "Start GoPiGo Demo!"
 			send_bash_command('sudo python /home/pi/Desktop/GoPiGo/Software/Python/other_scripts/demo.py')
 			ran_dialog = True
 		else:
-			print "Canceled!"
+			print "Cancel GoPiGo Demo!"
 		dlg.Destroy()
 		
 		# Depending on what the user chose, we either cancel or complete.  
@@ -128,7 +128,7 @@ class MainPanel(wx.Panel):
 			send_bash_command('sudo /home/pi/Desktop/GrovePi/Troubleshooting/all_tests.sh')
 			ran_dialog = True
 		else:
-			print "Canceled!"
+			print "Cancel GrovePi Tests!"
 		dlg.Destroy()
 		
 		# Depending on what the user chose, we either cancel or complete.  
