@@ -48,8 +48,8 @@ class MainPanel(wx.Panel):
 		curriculum_update.Bind(wx.EVT_BUTTON, self.curriculum_update)
 		
 		# Reboot
-		reboot_button = wx.Button(self, label="Reboot", pos=(25,y+150))
-		reboot_button.Bind(wx.EVT_BUTTON, self.reboot)
+		# reboot_button = wx.Button(self, label="Reboot", pos=(25,y+150))
+		# reboot_button.Bind(wx.EVT_BUTTON, self.reboot)
 		
 		# Exit
 		exit_button = wx.Button(self, label="Exit", pos=(25,y+200))
@@ -72,38 +72,38 @@ class MainPanel(wx.Panel):
 		dc.DrawBitmap(bmp, 200, 60)						# Absolute position of where to put the picture
 
 	def start_programming(self, event):
-		dlg = wx.MessageDialog(self, 'Enabling IR receiver', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'Enabling IR Receiver', 'Enable IR Receiver', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		
 		ir_receiver_check.enable_ir()
 		
-		dlg = wx.MessageDialog(self, 'IR receiver enabled. Please reboot', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'IR receiver enabled. Please reboot', 'Reboot', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 
 	def curriculum_update(self, event):
-		dlg = wx.MessageDialog(self, 'Checking IR receiver', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'Click OK to begin testing IR receiver.', 'Begin Check', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 
 		check=ir_receiver_check.check_ir()
 		# send_bash_command('sudo python /home/pi/Desktop/GoPiGo/Software/Python/other_scripts/demo.py')
 		if check:
-			dlg = wx.MessageDialog(self, 'IR receiver is enabled', 'Update', wx.OK|wx.ICON_INFORMATION)
+			dlg = wx.MessageDialog(self, 'IR receiver is enabled', 'Enable', wx.OK|wx.ICON_INFORMATION)
 		else:
-			dlg = wx.MessageDialog(self, 'IR receiver is disabled', 'Update', wx.OK|wx.ICON_INFORMATION)
+			dlg = wx.MessageDialog(self, 'IR receiver is disabled', 'Disable', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		
 	def examples(self, event):
-		dlg = wx.MessageDialog(self, 'Disabling IR receiver', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'Disabling IR receiver', 'Disable', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 	
 		ir_receiver_check.disable_ir()
 		
-		dlg = wx.MessageDialog(self, 'IR receiver disabled. Please reboot', 'Update', wx.OK|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'IR receiver disabled. Please reboot', 'Disabled', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		
@@ -114,6 +114,14 @@ class MainPanel(wx.Panel):
 		send_bash_command('sudo reboot')
 		
 	def onClose(self, event):	# Close the entire program.
+		dlg = wx.MessageDialog(self, 'You must reboot for changes to take effect.  Reboot now?', 'Reboot', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+		if dlg.ShowModal() == wx.ID_OK:
+			# Reboot
+			send_bash_command('sudo reboot')
+		else: 
+			# Do nothing.
+			print "No reboot."
+		dlg.Destroy()
 		self.frame.Close()
   
 ########################################################################
@@ -125,7 +133,7 @@ class MainFrame(wx.Frame):
 
 		wx.Icon('/home/pi/Desktop/GoBox/Troubleshooting_GUI/favicon.ico', wx.BITMAP_TYPE_ICO)
 		wx.Log.SetVerbose(False)
-		wx.Frame.__init__(self, None, title="IR receiver menu", size=(600,300))		# Set the fram size
+		wx.Frame.__init__(self, None, title="IR Receiver Menu", size=(600,300))		# Set the fram size
 
 		panel = MainPanel(self)        
 		self.Center()
