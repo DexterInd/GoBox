@@ -35,17 +35,17 @@ class MainPanel(wx.Panel):
 		#-------------------------------------------------------------------
 		# Standard Buttons
 		y=20
-		# Start Programming
-		start_programming = wx.Button(self, label="Enable IR receiver", pos=(25,y))
-		start_programming.Bind(wx.EVT_BUTTON, self.start_programming)
+		# Enable IR Receiver
+		enable_ir_receiver = wx.Button(self, label="Enable IR receiver", pos=(25,y))
+		enable_ir_receiver.Bind(wx.EVT_BUTTON, self.enable_ir_receiver)
 		
-		# Open Examples
-		examples_button = wx.Button(self, label="Disable IR receiver", pos=(25, y+50))
-		examples_button.Bind(wx.EVT_BUTTON, self.examples)			
+		# Disable IR Receiver
+		disable_ir_receiver = wx.Button(self, label="Disable IR receiver", pos=(25, y+50))
+		disable_ir_receiver.Bind(wx.EVT_BUTTON, self.dis_ir_rec)			
 		 
 		#Update Curriculum
-		curriculum_update = wx.Button(self, label="Test IR receiver", pos=(25,y+100))
-		curriculum_update.Bind(wx.EVT_BUTTON, self.curriculum_update)
+		test_ir_receiver = wx.Button(self, label="Test IR receiver", pos=(25,y+100))
+		test_ir_receiver.Bind(wx.EVT_BUTTON, self.test_ir_receiver)
 		
 		# Reboot
 		# reboot_button = wx.Button(self, label="Reboot", pos=(25,y+150))
@@ -71,7 +71,7 @@ class MainPanel(wx.Panel):
 		bmp = wx.Bitmap("/home/pi/Desktop/GoBox/Troubleshooting_GUI/dex.png")	# Draw the photograph.
 		dc.DrawBitmap(bmp, 200, 60)						# Absolute position of where to put the picture
 
-	def start_programming(self, event):
+	def enable_ir_receiver(self, event):
 		dlg = wx.MessageDialog(self, 'Enabling IR Receiver', 'Enable IR Receiver', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
@@ -82,7 +82,7 @@ class MainPanel(wx.Panel):
 		dlg.ShowModal()
 		dlg.Destroy()
 
-	def curriculum_update(self, event):
+	def test_ir_receiver(self, event):
 		dlg = wx.MessageDialog(self, 'Click OK to begin testing IR receiver.', 'Begin Check', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
@@ -96,7 +96,7 @@ class MainPanel(wx.Panel):
 		dlg.ShowModal()
 		dlg.Destroy()
 		
-	def examples(self, event):
+	def dis_ir_rec(self, event):
 		dlg = wx.MessageDialog(self, 'Disabling IR receiver', 'Disable', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
@@ -107,11 +107,12 @@ class MainPanel(wx.Panel):
 		dlg.ShowModal()
 		dlg.Destroy()
 		
-	def reboot(self,event):
+	'''def reboot(self,event):
 		dlg = wx.MessageDialog(self, 'Rebooting', 'Rebooting', wx.OK|wx.ICON_INFORMATION)
 		dlg.ShowModal()
 		dlg.Destroy()
 		send_bash_command('sudo reboot')
+	'''
 		
 	def onClose(self, event):	# Close the entire program.
 		dlg = wx.MessageDialog(self, 'You must reboot for changes to take effect.  Reboot now?', 'Reboot', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
