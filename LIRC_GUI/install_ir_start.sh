@@ -13,7 +13,7 @@
 # sudo apt-get install python-wxgtk2.8 python-wxtools wx2.8-i18n --force-yes
 
 # Remove any old shortcut from the desktop.
-sudo rm /home/pi/Desktop/GoBox/LIRC_GUI/ir_start.desktop
+sudo rm /home/pi/Desktop/ir_start.desktop
 # Copy shortcut to desktop.
 sudo cp /home/pi/Desktop/GoBox/LIRC_GUI/ir_start.desktop /home/pi/Desktop
 # Make shortcut executable
