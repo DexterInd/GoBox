@@ -71,25 +71,25 @@ def enable_ir():
 		with open('/etc/modules', 'a') as file:
 			file.write('lirc_dev\n')
 			
-	if 'lirc_rpi gpio_in_pin=15' in open('/etc/modules').read():
+	if 'lirc_rpi gpio_in_pin=14' in open('/etc/modules').read():
 		if debug:
-			print "lirc_rpi gpio_in_pin=15 already in /etc/modules"
+			print "lirc_rpi gpio_in_pin=14 already in /etc/modules"
 	else:
 		if debug:
-			print "lirc_rpi gpio_in_pin=15 added"
+			print "lirc_rpi gpio_in_pin=14 added"
 			
 		with open('/etc/modules', 'a') as file:
-			file.write('lirc_rpi gpio_in_pin=15\n')
+			file.write('lirc_rpi gpio_in_pin=14\n')
 	
-	if 'dtoverlay=lirc-rpi,gpio_in_pin=15' in open('/boot/config.txt').read():
+	if 'dtoverlay=lirc-rpi,gpio_in_pin=14' in open('/boot/config.txt').read():
 		if debug:
-			print "dtoverlay=lirc-rpi,gpio_in_pin=15 already in /boot/config.txt"
+			print "dtoverlay=lirc-rpi,gpio_in_pin=14 already in /boot/config.txt"
 	else:
 		if debug:
-			print "dtoverlay=lirc-rpi,gpio_in_pin=15 added"
+			print "dtoverlay=lirc-rpi,gpio_in_pin=14 added"
 			
 		with open('/boot/config.txt', 'a') as file:
-			file.write('dtoverlay=lirc-rpi,gpio_in_pin=15\n')
+			file.write('dtoverlay=lirc-rpi,gpio_in_pin=14\n')
 			
 			
 if __name__ == "__main__":
