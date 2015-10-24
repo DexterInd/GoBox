@@ -47,9 +47,11 @@ class MainPanel(wx.Panel):
 		test_ir_receiver = wx.Button(self, label="Test IR receiver", pos=(25,y+100))
 		test_ir_receiver.Bind(wx.EVT_BUTTON, self.test_ir_receiver)
 		
+		''' 
 		# Reboot
 		# reboot_button = wx.Button(self, label="Reboot", pos=(25,y+150))
 		# reboot_button.Bind(wx.EVT_BUTTON, self.reboot)
+		'''
 		
 		# Exit
 		exit_button = wx.Button(self, label="Exit", pos=(25,y+200))

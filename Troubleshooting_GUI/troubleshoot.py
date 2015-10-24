@@ -14,7 +14,21 @@ def send_bash_command(bashCommand):
 	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE) #, stderr=subprocess.PIPE)
 	output = process.communicate()[0]
 	return output
-	
+
+def send_bash_command_output(bashCommand):
+	# print bashCommand
+	write_debug(bashCommand)
+	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE) #, stderr=subprocess.PIPE)
+	# print process
+	output = process.communicate()[0]
+	# print output
+	return output
+
+def send_bash_command_in_background(bashCommand):
+	# Fire off a bash command and forget about it.
+	write_debug(bashCommand)
+	process = subprocess.Popen(bashCommand.split())
+
 class MainPanel(wx.Panel):
 	""""""
 	#----------------------------------------------------------------------
@@ -98,11 +112,13 @@ class MainPanel(wx.Panel):
 
 	###############################################################################
 	def demo_gopigo(self, event):
-		dlg = wx.MessageDialog(self, 'This Demo program will make sure everything is working on your GoPiGo.  The red LEDs in the front of the GoPiGo will blink once, and the GoPiGo will move forward, and then backwards.  \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the demo.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+		dlg = wx.MessageDialog(self, 'This Demo program will make sure everything is working on your GoPiGo.  The red LEDs in the front of the GoPiGo will blink once, and the GoPiGo will move forward, and then backwards.  So make sure it is on the floor so it does not fall off the table! \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  Be sure to unplug the power supply wall adapter from the GoPiGo. It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the demo.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
 		ran_dialog = False
 		if dlg.ShowModal() == wx.ID_OK:
 			print "Start GoPiGo Demo!"
-			send_bash_command('sudo python /home/pi/Desktop/GoPiGo/Software/Python/other_scripts/demo.py')
+			# send_bash_command('sudo python /home/pi/Desktop/GoPiGo/Software/Python/other_scripts/demo.py')
+			program = "sudo python /home/pi/Desktop/GoPiGo/Software/Python/hardware_test_2.py"
+			send_bash_command_in_background(program)
 			ran_dialog = True
 		else:
 			print "Cancel GoPiGo Demo!"

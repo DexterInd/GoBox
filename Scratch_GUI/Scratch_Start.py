@@ -128,7 +128,7 @@ class MainPanel(wx.Panel):
 		about_button.Bind(wx.EVT_BUTTON, self.About)
 		
 		# Test Hardware
-		test_button = wx.Button(self, label="Test", pos=(200, 425))
+		test_button = wx.Button(self, label="Demo Hardware", pos=(200, 425))
 		test_button.Bind(wx.EVT_BUTTON, self.test)
 		
 		# Exit
@@ -304,14 +304,14 @@ class MainPanel(wx.Panel):
 
 	def test(self, event):
 		# Test the hardware.  Test the selected hardware.  
-		write_debug("Test robot.")
+		write_debug("Demo robot.")
 		folder = read_state()
 		if folder.find('BrickPi') >= 0:
 			# Run BrickPi Test.
 			dlg = wx.MessageDialog(self, 'Ok, start BrickPi Test. Make sure the BrickPi is powerd by batteries, a motor is connected, and a touch sensor is connected to Port 1.  You shold see the LEDs blink and the motors move when the touch sensor is pressed.  Then press Ok. ', 'Test BrickPi!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
 			ran_dialog = False
 			if dlg.ShowModal() == wx.ID_OK:
-				print "hello!"
+				print "Run Hardware Test!"
 				program = "sudo python /home/pi/Desktop/BrickPi_Python/Brick_Hardware_Test.py"
 				send_bash_command_in_background(program)
 				ran_dialog = True
@@ -331,10 +331,10 @@ class MainPanel(wx.Panel):
 
 		elif folder.find('GoPiGo') >= 0:
 			# Run GoPiGo Test.
-			dlg = wx.MessageDialog(self, 'This test program will make sure everything is working on your GoPiGo.  \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the test.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+			dlg = wx.MessageDialog(self, 'This Demo program will make sure everything is working on your GoPiGo.  The red LEDs in the front of the GoPiGo will blink once, and the GoPiGo will move forward, and then backwards.  So make sure it is on the floor so it does not fall off the table! \n\nMake sure your batteries are connected to the GoPiGo, motors are connected, and it is turned on.  Be sure to unplug the power supply wall adapter from the GoPiGo. It is best to be working through wifi, but if the GoPiGo is connected to your computer with a cable right now, turn it upside down for the demo.  \n\nClick OK to begin.', 'Demonstrate the GoPiGo', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
 			ran_dialog = False
 			if dlg.ShowModal() == wx.ID_OK:
-				print "hello!"
+				print "Begin Running GoPiGo Test!"
 				program = "sudo python /home/pi/Desktop/GoPiGo/Software/Python/hardware_test_2.py"
 				send_bash_command_in_background(program)
 				ran_dialog = True
