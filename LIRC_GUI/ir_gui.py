@@ -136,7 +136,7 @@ class MainFrame(wx.Frame):
 
 		wx.Icon('/home/pi/Desktop/GoBox/Troubleshooting_GUI/favicon.ico', wx.BITMAP_TYPE_ICO)
 		wx.Log.SetVerbose(False)
-		wx.Frame.__init__(self, None, title="IR Receiver Menu", size=(600,300))		# Set the fram size
+		wx.Frame.__init__(self, None, title="IR Receiver Setup", size=(600,300))		# Set the fram size
 
 		panel = MainPanel(self)        
 		self.Center()
