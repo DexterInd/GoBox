@@ -9,6 +9,7 @@ import threading
 import psutil
 import signal
 import urllib2
+from gopigo import *
 
 # References
 # http://www.blog.pythonlibrary.org/2010/03/18/wxpython-putting-a-background-image-on-a-panel/
@@ -128,8 +129,13 @@ class MainPanel(wx.Panel):
 		about_button.Bind(wx.EVT_BUTTON, self.About)
 		
 		# Test Hardware
-		test_button = wx.Button(self, label="Demo Hardware", pos=(200, 425))
+		test_button = wx.Button(self, label="Demo Hardware", pos=(185, 425))
 		test_button.Bind(wx.EVT_BUTTON, self.test)
+		
+		# Bind Stop Button 
+		stop_gopigo = wx.Button(self, label="Stop GoPiGo", pos=(300,425))
+		stop_gopigo.SetBackgroundColour('red')
+		stop_gopigo.Bind(wx.EVT_BUTTON, self.stop_gopigo)
 		
 		# Exit
 		exit_button = wx.Button(self, label="Exit", pos=(25,475))
@@ -209,6 +215,12 @@ class MainPanel(wx.Panel):
 				wx.StaticBitmap(self, -1, png, (200, 200), (png.GetWidth(), png.GetHeight()))
 			except:
 				print "Failed robotDrop."
+
+			
+
+	def stop_gopigo(self, event):
+		write_debug("STOP robot.")
+		stop()
 
 	def start_programming(self, event):
 		# Kill all Python Programs.  Any running *Scratch* Python Programs.
