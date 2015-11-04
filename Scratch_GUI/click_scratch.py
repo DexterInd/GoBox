@@ -173,25 +173,34 @@ class MainPanel(wx.Panel):
 	def start_programming(self, event):
 		# Kill all Python Programs.  Any running *Scratch* Python Programs.
 		write_debug("Start robot.")	
-		dlg = wx.MessageDialog(self, 'This will close any open Scratch programs.  Please save your work and click Ok!', 'Alert!', wx.OK|wx.ICON_INFORMATION)
-		dlg.ShowModal()
-		dlg.Destroy()
-		kill_all_open_processes()  # Kills all open squeak, Scratch programs.
+		dlg = wx.MessageDialog(self, 'This will close any open Scratch programs.  Please save your work and click Ok!', 'Alert!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+		ran_dialog = False
+		if dlg.ShowModal() == wx.ID_OK:
+			kill_all_open_processes()  # Kills all open squeak, Scratch programs.
 		
-		folder = read_state()
-		if folder == 'BrickPi':
-			program = "/home/pi/Desktop/BrickPi_Scratch/BrickPiScratch.py"
-		if folder == 'GoPiGo':
-			program = "/home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGoScratch.py"
-		if folder == 'GrovePi':
-			program = "/home/pi/Desktop/GrovePi/Software/Scratch/GrovePiScratch.py"
-		start_command = "sudo python "+program
-		send_bash_command_in_background(start_command)
+			folder = read_state()
+			if folder == 'BrickPi':
+				program = "/home/pi/Desktop/BrickPi_Scratch/BrickPiScratch.py"
+			if folder == 'GoPiGo':
+				program = "/home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGoScratch.py"
+			if folder == 'GrovePi':
+				program = "/home/pi/Desktop/GrovePi/Software/Scratch/GrovePiScratch.py"
+			start_command = "sudo python "+program
+			send_bash_command_in_background(start_command)
 		
-		write_debug("Programming Started.")	
+			write_debug("Programming Started.")	
 		
-		self.frame.Close()
-		sys.exit()				# Exit!
+			file_temp = open("/home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp", "w")
+			file_temp.close()
+
+			dlg.Destroy()
+			self.frame.Close()
+			sys.exit()				# Exit!
+		else:
+			print "Cancel Scratch Start!"
+			dlg.Destroy()	
+		dlt.Destroy()
+
 		# Start Scratch
 		''' 
 		start_command = "scratch /home/pi/Desktop/GoBox/Scratch_GUI/new.sb"
