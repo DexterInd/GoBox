@@ -17,7 +17,7 @@ def send_bash_command(bashCommand):
 
 def send_bash_command_output(bashCommand):
 	# print bashCommand
-	write_debug(bashCommand)
+	# write_debug(bashCommand)
 	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE) #, stderr=subprocess.PIPE)
 	# print process
 	output = process.communicate()[0]
@@ -26,7 +26,7 @@ def send_bash_command_output(bashCommand):
 
 def send_bash_command_in_background(bashCommand):
 	# Fire off a bash command and forget about it.
-	write_debug(bashCommand)
+	# write_debug(bashCommand)
 	process = subprocess.Popen(bashCommand.split())
 
 class MainPanel(wx.Panel):
