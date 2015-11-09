@@ -263,16 +263,16 @@ class MainPanel(wx.Panel):
 			if(os.path.isdir("/home/pi/Desktop/GoBox")):
 				dlg.Update(35)
 				os.chdir("/home/pi/Desktop/GoBox")
-				send_bash_command("git fetch origin")
+				send_bash_command("sudo git fetch origin")
 				dlg.Update(55)
-				send_bash_command("git reset --hard")
+				send_bash_command("sudo git reset --hard")
 				dlg.Update(65)
-				send_bash_command("git merge origin/master")
+				send_bash_command("sudo git merge origin/master")
 				dlg.Update(75)
 			else:
 				os.chdir("/home/pi/Desktop/") 											# Change directory.
 				dlg.Update(25)
-				send_bash_command("git clone https://github.com/DexterInd/GoBox")	# Clone the repo.
+				send_bash_command("sudo git clone https://github.com/DexterInd/GoBox")	# Clone the repo.
 				dlg.Update(35)
 			print "End of Dialog Box!"
 		
@@ -283,16 +283,17 @@ class MainPanel(wx.Panel):
 			send_bash_command("sudo chmod +x /home/pi/Desktop/Scratch_Start.desktop")
 			send_bash_command("sudo chmod +x /home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGo_Scratch_Scripts/GoPiGoScratch_debug.sh")					# Change script permissions
 			send_bash_command("sudo chmod +x /home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGo_Scratch_Scripts/GoPiGo_Scratch_Start.sh")					# Change script permissions
-			# send_bash_command("sudo chmod +x /home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGo_Scratch_Scripts/selected_state")					# Change script permissions
 			send_bash_command("sudo chmod +x /home/pi/Desktop/GoBox/Scratch_GUI/click_scratch.py")
 			send_bash_command("sudo chmod +x /home/pi/Desktop/GoBox/Scratch_GUI/scratch")
 			send_bash_command("sudo chmod ugo+r /home/pi/Desktop/GoBox/Scratch_GUI/new.sb")
 			send_bash_command("sudo chmod ugo+r /home/pi/Desktop/GoBox/Scratch_GUI/new.sb.bkp")
 			send_bash_command("sudo chmod +x /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.sh")
-	                send_bash_command("sudo chmod 777 /home/pi/Desktop/GoBox/Scratch_GUI/selected_state")
-        	        time.sleep(1)
-                	print "File permissions changed."
-		
+			send_bash_command("sudo chmod 777 /home/pi/Desktop/GoBox/Scratch_GUI/selected_state")
+			send_bash_command("sudo chmod 777 /home/pi/Desktop/GoBox/Scratch_GUI/error_log")
+			send_bash_command("sudo chmod 777 /home/pi/nohup.out")
+			time.sleep(1)
+			print "File permissions changed."
+			
 			dlg.Destroy()
 		else:
 			dlg = wx.MessageDialog(self, 'Internet not detected!  Please connect to the internet and try again!', 'Update', wx.OK|wx.ICON_INFORMATION)

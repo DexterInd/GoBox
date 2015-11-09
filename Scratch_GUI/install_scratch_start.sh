@@ -13,8 +13,10 @@ sudo chmod +x /home/pi/Desktop/Scratch_Start.desktop
 sudo chmod +x /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.sh
 # Make scratch start example read only.
 sudo chmod ugo+r /home/pi/Desktop/GoBox/Scratch_GUI/new.sb	# user, group, etc are just read only
-# Make select_state readable and writale
+# Make select_state, error_log, nohup.out readable and writable
 sudo chmod 777 /home/pi/Desktop/GoBox/Scratch_GUI/selected_state
+sudo chmod 777 /home/pi/Desktop/GoBox/Scratch_GUI/error_log
+sudo chmod 777 /home/pi/nohup.out
 
 # Remove Scratch Shortcuts if they're there.
 sudo rm /home/pi/Desktop/BrickPi_Scratch_Start.desktop
