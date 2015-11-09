@@ -244,7 +244,7 @@ class MainPanel(wx.Panel):
 		write_debug("Programming Started.")	
 		
 		# Start Scratch
-		start_command = "sudo  sh /home/pi/Desktop/GoBox/Scratch_GUI/scratch_direct /home/pi/Desktop/GoBox/Scratch_GUI/new.sb"
+		start_command = "sh /home/pi/Desktop/GoBox/Scratch_GUI/scratch_direct /home/pi/Desktop/GoBox/Scratch_GUI/new.sb"
 		send_bash_command_in_background(start_command)
 		'''
 		dlg = wx.MessageDialog(self, 'Starting Scratch Programming!', 'Update', wx.OK|wx.ICON_INFORMATION)
