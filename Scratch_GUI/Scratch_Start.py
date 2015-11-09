@@ -21,9 +21,12 @@ def write_debug(in_string):
 	# In in time logging.
 	#print in_string
 	write_string = str(datetime.now()) + " - " + in_string + "\n"
-	error_file = open('/home/pi/Desktop/GoBox/Scratch_GUI/error_log', 'a')		# File: Error logging
-	error_file.write(write_string)
-	error_file.close()
+	try:
+		error_file = open('/home/pi/Desktop/GoBox/Scratch_GUI/error_log', 'a')		# File: Error logging
+		error_file.write(write_string)
+		error_file.close()
+	except:
+		print " "
 
 def write_state(in_string):
 	error_file = open('/home/pi/Desktop/GoBox/Scratch_GUI/selected_state', 'w')		# File: selected state
