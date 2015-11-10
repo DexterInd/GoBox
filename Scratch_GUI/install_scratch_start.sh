@@ -7,15 +7,20 @@
 
 # Copy shortcut to desktop.
 cp /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.desktop /home/pi/Desktop
-sudo rm /usr/share/applications/scratch.desktop															# Remove the Scratch Start button in the Menu
-sudo rm /usr/share/raspi-ui-overrides/applications/scratch.desktop										# Remove the Scratch Start button in the Menu
-sudo cp /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.desktop /usr/share/applications/scratch.desktop						# Copy the Scratch_Start to the Menu
-sudo cp /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.desktop /usr/share/raspi-ui-overrides/applications/scratch.desktop		# Copy the Scratch_Start to the Menu
+# sudo rm /usr/share/applications/scratch.desktop															# Remove the Scratch Start button in the Menu
+
+######
+# Added these to solve the menu problem of scratch.  Then removed them.  
+# These are removed for now, the call up the Scratch Gui, not the scratch start.
+# sudo rm /usr/share/raspi-ui-overrides/applications/scratch.desktop										# Remove the Scratch Start button in the Menu
+# sudo cp /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.desktop /usr/share/applications/scratch.desktop						# Copy the Scratch_Start to the Menu
+# sudo cp /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.desktop /usr/share/raspi-ui-overrides/applications/scratch.desktop		# Copy the Scratch_Start to the Menu
+# sudo chmod 777 /usr/share/applications/scratch.desktop							# Menu Shortcut Permissions.
+# sudo chmod 777 /usr/share/raspi-ui-overrides/applications/scratch.desktop		# Menu Shortcut Permissions.
 
 # Make shortcut executable
 sudo chmod +x /home/pi/Desktop/Scratch_Start.desktop							# Desktop shortcut permissions.
-sudo chmod 777 /usr/share/applications/scratch.desktop							# Menu Shortcut Permissions.
-sudo chmod 777 /usr/share/raspi-ui-overrides/applications/scratch.desktop		# Menu Shortcut Permissions.
+
 # Make run_scratch_gui executable.
 sudo chmod +x /home/pi/Desktop/GoBox/Scratch_GUI/Scratch_Start.sh
 # Make scratch start example read only.
