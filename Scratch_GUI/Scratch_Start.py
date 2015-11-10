@@ -66,7 +66,8 @@ def internet_on():
 
 	
 def kill_all_open_processes():
-	p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)
+	# p = subprocess.Popen(['ps', '-aux'], stdout=subprocess.PIPE)	# This line threw a BSD related warning.  Suppressed warning removing the "-"
+	p = subprocess.Popen(['ps', 'aux'], stdout=subprocess.PIPE)
 	out, err = p.communicate()
 	# print out
 	for line in out.splitlines():
@@ -157,7 +158,8 @@ class MainPanel(wx.Panel):
 		
 		wx.StaticText(self, -1, "Select a Robot:", (25, 205))					# (Minus 50, minus 0)
 		
-		wx.StaticText(self, -1, "Caution: Do not close the LXTerminal window running \nin the background right now.", (25, 520))
+		# wx.StaticText(self, -1, "Caution: Do not close the LXTerminal window running \nin the background right now.", (25, 520))
+		wx.StaticText(self, -1, "Caution: Do not close the Scratch Controller window \nrunning in the background right now.", (25, 520))
 
 		# Drop Boxes
 		#-------------------------------------------------------------------
@@ -373,7 +375,7 @@ class MainPanel(wx.Panel):
 			dlg = wx.MessageDialog(self, 'Ok, start GrovePi Test. Attach buzzer to D8 and a button to A0.  Press the button and the buzzer should sound.  Press Ok to start. ', 'Test GrovePi!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
 			ran_dialog = False
 			if dlg.ShowModal() == wx.ID_OK:
-				print "hello!"
+				print "Run GrovePi Test!"
 				program = "sudo python /home/pi/Desktop/GrovePi/Software/Python/GrovePi_Hardware_Test.py"
 				send_bash_command_in_background(program)
 				ran_dialog = True
