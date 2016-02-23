@@ -170,13 +170,14 @@ class MainPanel(wx.Panel):
 		self.SetSizer(hSizer)
 	
 		self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)		# Sets background picture
- 
+ 		send_bash_command_in_background("clear")	# This clears out the GTK Error Messages and warnings.
+ 		
 	#----------------------------------------------------------------------
 	def OnEraseBackground(self, evt):
 		"""
 		Add a picture to the background
 		"""
-		send_bash_command_in_background("clear")	# This clears out the GTK Error Messages and warnings.
+
 		# yanked from ColourDB.py
 		dc = evt.GetDC()
  
