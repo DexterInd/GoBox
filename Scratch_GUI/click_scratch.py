@@ -140,6 +140,7 @@ class MainPanel(wx.Panel):
 		Add a picture to the background
 		"""
 		# yanked from ColourDB.py
+		send_bash_command_in_background("clear")	# This clears out the GTK Error Messages and warnings.
 		dc = evt.GetDC()
  
 		if not dc:
