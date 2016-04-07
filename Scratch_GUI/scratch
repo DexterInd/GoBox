@@ -3,16 +3,64 @@
 # Description:     Script to start the Squeak VM binary with the scratch image
 # Original Author: Bert Freudenberg
 # Adapted by:      Miriam Ruiz
-# Adapted again by:  Dexter Industries 
 
-VM_VERSION=`find /usr/lib/squeak/ -name "squeakvm" -type f|cut -f5 -d"/"`
-SQ_DIR=/usr/lib/squeak/$VM_VERSION
-VM="$SQ_DIR/squeakvm"
-VMOPTIONS="-encoding UTF-8 -vm-display-x11 -xshm -plugins /usr/lib/scratch/plugins/:$SQ_DIR/"
-IMAGE="/usr/share/scratch/Scratch20131203.image"
-IMOPTIONS=""
-DOCUMENT=""
-WRAPPER=""
+
+## Check if we're running Jessie or Wheezy.  Set Variables accordingly
+## Get the Debian Version we have installed.
+VERSION=$(sed 's/\..*//' /etc/debian_version)
+echo "Version: $VERSION"
+if [ $VERSION -eq '7' ]; then
+	echo "Version 7 found!  You have Wheezy!"
+	VM_VERSION=`find /usr/lib/squeak/ -name "squeakvm" -type f|cut -f5 -d"/"`
+	SQ_DIR=/usr/lib/squeak/$VM_VERSION
+	VM="$SQ_DIR/squeakvm"
+	VMOPTIONS="-encoding UTF-8 -vm-display-x11 -xshm -plugins /usr/lib/scratch/plugins/:$SQ_DIR/"
+
+	IMAGE="/usr/share/scratch/Scratch20131203.image"
+	IMOPTIONS=""
+	DOCUMENT=""
+	WRAPPER=""
+	
+	# do not crash on dbus errors
+	export DBUS_FATAL_WARNINGS=0
+
+	# make Compose input methods work
+	# 30/01/2013: apprently this causes issues, so comment out. asb@asbradbury.org
+	#[ -z "$LC_ALL" ] && export LC_ALL="$LANG"
+
+	VMOPTIONS="$VMOPTIONS -vm-sound-alsa"
+	
+elif [ $VERSION -eq '8' ]; then
+	echo "Version 8 found!  You have Jessie!"
+	# If we found Jesse, the proper location of the html files is in
+	VM="/usr/bin/squeak"
+	IMAGE="/usr/share/scratch/NuScratch15012016.image"
+	IMOPTIONS=""
+	DOCUMENT=""
+	WRAPPER="sudo -E "
+
+	# prevent wiringPi from terminating  brutally
+	export WIRINGPI_CODES="TRUE"
+	#set to 1 to work around OLPC bug #8008
+	export SQUEAK_FAKEBIGCURSOR=0
+
+	#test for likely camera setup, install v4l2 driver if needed
+	vcgencmd get_camera | grep -q 'supported=1 detected=1'
+	if [ $? -eq 0 ]; then
+		sudo modprobe bcm2835-v4l2
+	fi
+
+
+	grep -q 'Sense HAT' /proc/device-tree/hat/product > /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		sudo modprobe i2c-dev
+	fi
+	
+fi
+
+echo $VERSION
+
+
 
 #set to 1 to work around OLPC bug #8008
 export SQUEAK_FAKEBIGCURSOR=0
@@ -90,18 +138,10 @@ else
 	shift
     done
 fi
-
-# do not crash on dbus errors
-export DBUS_FATAL_WARNINGS=0
-
-# make Compose input methods work
-# 30/01/2013: apprently this causes issues, so comment out. asb@asbradbury.org
-#[ -z "$LC_ALL" ] && export LC_ALL="$LANG"
-
-VMOPTIONS="$VMOPTIONS -vm-sound-alsa"
+# VM, Image, and Document are non-optional
+# Document has to be present even if empty for IMOPTIONS to work
 
 echo "$DOCUMENT"
-
 xhost +
 sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/new.sb
 sudo cp /home/pi/Desktop/GoBox/Scratch_GUI/new.sb.bkp /home/pi/Desktop/GoBox/Scratch_GUI/new.sb
@@ -119,15 +159,36 @@ else
 	sudo python /home/pi/Desktop/GoBox/Scratch_GUI/click_scratch.py
 fi
 
-# VM, Image, and Document are non-optional
-# Document has to be present even if empty for IMOPTIONS to work
+## Now, if we are running Jessie, we need to move everything
+## into a new subdirectory.
+## Get the Debian Version we have installed.
+VERSION=$(sed 's/\..*//' /etc/debian_version)
+echo "Version: $VERSION"
+if [ $VERSION -eq '7' ]; then
+	echo "Version 7 found!  You have Wheezy!"
 
-if [ -f /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp ]; then
+	if [ -f /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp ]; then
+		sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
+		echo Executing: $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
+		exec $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
+	else
+		sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
+	fi
 	sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
-	echo Executing: $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
-	exec $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
-else
+
+elif [ $VERSION -eq '8' ]; then
+  echo "Version 8 found!  You have Jessie!"
+  # If we found Jesse,
+
+	
+	if [ -f /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp ]; then
+		sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
+		echo Executing: $WRAPPER "$VM" "$IMAGE" "$DOCUMENT" $IMOPTIONS
+		exec $WRAPPER "$VM" "$IMAGE" "$DOCUMENT" $IMOPTIONS
+	else
+		sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
+	fi
 	sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
 fi
-sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
+
 
