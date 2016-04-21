@@ -15,9 +15,10 @@
 # Remove any old shortcut from the desktop.
 sudo rm /home/pi/Desktop/ir_start.desktop
 # Copy shortcut to desktop.
-sudo cp /home/pi/Desktop/GoBox/LIRC_GUI/ir_start.desktop /home/pi/Desktop
+## NOTE: LIRC GUI changed to advanced comms options
+# sudo cp /home/pi/Desktop/GoBox/LIRC_GUI/ir_start.desktop /home/pi/Desktop
 # Make shortcut executable
-sudo chmod +x /home/pi/Desktop/ir_start.desktop
+# sudo chmod +x /home/pi/Desktop/ir_start.desktop
 # Make ir_start.sh executable.
 sudo chmod +x /home/pi/Desktop/GoBox/LIRC_GUI/ir_start.sh
 sudo python setup.py install
