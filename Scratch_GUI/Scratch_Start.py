@@ -133,11 +133,11 @@ class MainPanel(wx.Panel):
 		about_button.Bind(wx.EVT_BUTTON, self.About)
 		
 		# Test Hardware
-		test_button = wx.Button(self, label="Demo Hardware", pos=(185, 425))
+		test_button = wx.Button(self, label="Demo Hardware", pos=(225, 425))
 		test_button.Bind(wx.EVT_BUTTON, self.test)
 		
 		# Bind Stop Button 
-		stop_gopigo = wx.Button(self, label="Stop GoPiGo", pos=(300,425))
+		stop_gopigo = wx.Button(self, label="Stop GoPiGo", pos=(225,475))
 		stop_gopigo.SetBackgroundColour('red')
 		stop_gopigo.Bind(wx.EVT_BUTTON, self.stop_gopigo)
 		
@@ -170,12 +170,14 @@ class MainPanel(wx.Panel):
 		self.SetSizer(hSizer)
 	
 		self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnEraseBackground)		# Sets background picture
- 
+ 		send_bash_command_in_background("clear")	# This clears out the GTK Error Messages and warnings.
+ 		
 	#----------------------------------------------------------------------
 	def OnEraseBackground(self, evt):
 		"""
 		Add a picture to the background
 		"""
+
 		# yanked from ColourDB.py
 		dc = evt.GetDC()
  
