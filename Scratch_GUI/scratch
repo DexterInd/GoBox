@@ -34,10 +34,11 @@ elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
 	# If we found Jesse, the proper location of the html files is in
 	VM="/usr/bin/squeak"
-	IMAGE="/usr/share/scratch/NuScratch15012016.image"
+	IMAGE="/usr/share/scratch/NuScratch02052016.image" 
 	IMOPTIONS=""
 	DOCUMENT=""
-	WRAPPER="sudo -E "
+	# WRAPPER="sudo -E "
+	WRAPPER=""
 
 	# prevent wiringPi from terminating  brutally
 	export WIRINGPI_CODES="TRUE"
