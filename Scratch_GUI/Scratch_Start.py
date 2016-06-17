@@ -153,7 +153,12 @@ class MainPanel(wx.Panel):
 
 		# Select Platform.
 		
-		robotDrop = wx.ComboBox(self, -1, "GoPiGo", pos=(25, 225), size=(150, -1), choices=controls, style=wx.CB_READONLY)  # Drop down setup
+		state = read_state()
+		if state in controls:
+			robotDrop = wx.ComboBox(self, -1, str(state), pos=(25, 225), size=(150, -1), choices=controls, style=wx.CB_READONLY)  # Drop down setup
+		else:
+			write_state("GoPiGo")
+			robotDrop = wx.ComboBox(self, -1, "GoPiGo", pos=(25, 225), size=(150, -1), choices=controls, style=wx.CB_READONLY)  # Drop down setup
 		robotDrop.Bind(wx.EVT_COMBOBOX, self.robotDrop)					# Binds drop down.		
 		
 		wx.StaticText(self, -1, "Select a Robot:", (25, 205))					# (Minus 50, minus 0)
@@ -402,7 +407,7 @@ class MainPanel(wx.Panel):
 		dlg.Destroy()
 		
 	def onClose(self, event):	# Close the entire program.
-		write_state('GoPiGo')
+		#write_state('GoPiGo')
 		write_debug("Close Pressed.")
 		"""
 		"""
@@ -439,7 +444,7 @@ class Main(wx.App):
 #----------------------------------------------------------------------
 if __name__ == "__main__":
 	write_debug(" # Program # started # !")
-	write_state("GoPiGo")
+	#write_state("GoPiGo")
 	kill_all_open_processes()
 	# reset_file()	#Reset the file every time we turn this program on.
 	app = Main()
