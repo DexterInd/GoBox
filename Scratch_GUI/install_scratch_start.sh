@@ -32,9 +32,21 @@ sudo chmod 777 /home/pi/nohup.out
 
 # Install Scratch Example Shortcuts for the Products
 # This will creat symbolic links to the various example scripts.  https://blog.bartbania.com/raspberry_pi/create-symbolic-links-in-linux/
-ln -s /home/pi/Desktop/GrovePi/Software/Scratch/Grove_Examples/ GrovePi
-ln -s /home/pi/Desktop/GoPiGo/Software/Scratch/Examples/ GoPiGo
-ln -s /home/pi/Desktop/BrickPi_Scratch/Examples/ BrickPi
+#ln -s /home/pi/Desktop/GrovePi/Software/Scratch/Grove_Examples/ GrovePi
+#ln -s /home/pi/Desktop/GoPiGo/Software/Scratch/Examples/ GoPiGo
+#ln -s /home/pi/Desktop/BrickPi_Scratch/Examples/ BrickPi
+
+# Add the soft links that allows users to reach the Dexter Ind Scratch examples from within the Scratch interface
+
+# BrickPi link
+[ ! -d /usr/share/scratch/Projects/BrickPi ]  && sudo ln -s /home/pi/Desktop/BrickPi/Examples /usr/share/scratch/Projects/BrickPi
+
+# GoPiGo link
+[ ! -d /usr/share/scratch/Projects/GoPiGo ]  && sudo ln -s /home/pi/Desktop/GoPiGo/Software/Scratch/Examples /usr/share/scratch/Projects/GoPiGo
+
+# GrovePi Link
+[ ! -d /usr/share/scratch/Projects/GrovePi ]  && sudo ln -s /home/pi/Desktop/GrovePi/Software/Scratch/Grove_Examples /usr/share/scratch/Projects/GrovePi
+
 
 # Remove Scratch Shortcuts if they're there.
 sudo rm /home/pi/Desktop/BrickPi_Scratch_Start.desktop
