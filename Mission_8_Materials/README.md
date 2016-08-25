@@ -1,7 +1,7 @@
-## **GoBox: Mission 7.**
+## **GoBox: Mission 8.**
 
-### Welcome to Mission 7!
-You can find [more resources on GoBox Mission 7 here.](http://www.dexterindustries.com/goboxmissions/missionseven)
+### Welcome to Mission 8!
+You can find [more resources on GoBox Mission 8 here.](http://www.dexterindustries.com/goboxmissions/missioneight)
 
 ![Picture](gobox-for-the-raspberry-pi-by-dexter-industries.jpg)
 
