@@ -337,7 +337,7 @@ class MainPanel(wx.Panel):
 			ran_dialog = False
 			if dlg.ShowModal() == wx.ID_OK:
 				print "Run Hardware Test!"
-				program = "sudo python /home/pi/Desktop/BrickPi_Python/Brick_Hardware_Test.py"
+				program = "sudo python /home/pi/Desktop/BrickPi_Python/Sensor_Examples/Brick_Hardware_Test.py"
 				send_bash_command_in_background(program)
 				ran_dialog = True
 			else:
