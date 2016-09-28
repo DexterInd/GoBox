@@ -21,4 +21,4 @@ sudo rm /home/pi/Desktop/ir_start.desktop
 # sudo chmod +x /home/pi/Desktop/ir_start.desktop
 # Make ir_start.sh executable.
 sudo chmod +x /home/pi/Desktop/GoBox/LIRC_GUI/ir_start.sh
-sudo python setup.py install
+sudo python /home/pi/Desktop/GoBox/LIRC_GUI/setup.py install
