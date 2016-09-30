@@ -34,7 +34,15 @@ elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
 	# If we found Jesse, the proper location of the html files is in
 	VM="/usr/bin/squeak"
-	IMAGE="/usr/share/scratch/NuScratch02052016.image"
+	if [ -f /usr/share/scratch/NuScratch02052016.image ]
+	then
+		IMAGE="/usr/share/scratch/NuScratch02052016.image"
+	fi
+	if [ -f /usr/share/scratch/NuScratch20160915.image ]
+	then
+		IMAGE="/usr/share/scratch/NuScratch20160915.image"
+	fi
+
 	IMOPTIONS=""
 	DOCUMENT=""
 	WRAPPER="sudo -E "
