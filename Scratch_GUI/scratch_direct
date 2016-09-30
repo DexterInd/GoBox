@@ -32,7 +32,7 @@ if [ $VERSION -eq '7' ]; then
 	
 elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
-	# If we found Jesse, the proper location of the html files is in
+	# If we found Jessie, the proper filename for Scratch is:
 	VM="/usr/bin/squeak"
 	if [ -f /usr/share/scratch/NuScratch02052016.image ]
 	then
