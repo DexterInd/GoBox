@@ -34,13 +34,10 @@ elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
 	# If we found Jessie, the proper filename for Scratch is:
 	VM="/usr/bin/squeak"
-	if [ -f /usr/share/scratch/NuScratch02052016.image ]
+	# To store the path of the file starting with NuScratch
+	if test -n "$(find /usr/share/scratch/ -maxdepth 1 -name 'NuScratch*')"
 	then
-		IMAGE="/usr/share/scratch/NuScratch02052016.image"
-	fi
-	if [ -f /usr/share/scratch/NuScratch20160915.image ]
-	then
-		IMAGE="/usr/share/scratch/NuScratch20160915.image"
+	IMAGE=`find /usr/share/scratch/ -maxdepth 1 -name "NuScratch*" -type f`
 	fi
 
 	IMOPTIONS=""
