@@ -32,9 +32,14 @@ if [ $VERSION -eq '7' ]; then
 	
 elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
-	# If we found Jesse, the proper location of the html files is in
+	# If we found Jessie, the proper filename for Scratch is:
 	VM="/usr/bin/squeak"
-	IMAGE="/usr/share/scratch/NuScratch02052016.image"
+	# To store the path of the file starting with NuScratch
+	if test -n "$(find /usr/share/scratch/ -maxdepth 1 -name 'NuScratch*')"
+	then
+	IMAGE=`find /usr/share/scratch/ -maxdepth 1 -name "NuScratch*" -type f`
+	fi
+
 	IMOPTIONS=""
 	DOCUMENT=""
 	WRAPPER="sudo -E "

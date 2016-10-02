@@ -333,7 +333,7 @@ class MainPanel(wx.Panel):
 		folder = read_state()
 		if folder.find('BrickPi') >= 0:
 			# Run BrickPi Test.
-			dlg = wx.MessageDialog(self, 'Ok, start BrickPi Test. Make sure the BrickPi is powerd by batteries, a motor is connected, and a touch sensor is connected to Port 1.  You shold see the LEDs blink and the motors move when the touch sensor is pressed.  Then press Ok. ', 'Test BrickPi!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
+			dlg = wx.MessageDialog(self, 'Ok, start BrickPi Test. Make sure the BrickPi is powered by batteries, a motor is connected, and a touch sensor is connected to Port 1.  You shold see the LEDs blink and the motors move when the touch sensor is pressed.  Then press Ok. ', 'Test BrickPi!', wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
 			ran_dialog = False
 			if dlg.ShowModal() == wx.ID_OK:
 				print "Run Hardware Test!"
