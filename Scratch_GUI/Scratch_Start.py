@@ -71,6 +71,11 @@ def kill_all_open_processes():
 	out, err = p.communicate()
 	# print out
 	for line in out.splitlines():
+		if 'squeak' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)		
 		if 'squeakvm' in line:
 			print line
 			pid = int(line.split(None, 2)[1])
