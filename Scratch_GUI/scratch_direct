@@ -34,12 +34,14 @@ elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
 	# If we found Jessie, the proper filename for Scratch is:
 	VM="/usr/bin/squeak"
+        VMOPTIONS=""
 	# To store the path of the file starting with NuScratch
 	if test -n "$(find /usr/share/scratch/ -maxdepth 1 -name 'NuScratch*')"
 	then
 	IMAGE=`find /usr/share/scratch/ -maxdepth 1 -name "NuScratch*" -type f`
 	fi
 
+	VMOPTIONS="$VMOPTIONS -vm-sound-alsa"
 	IMOPTIONS=""
 	DOCUMENT=""
 	WRAPPER="sudo -E "
@@ -163,8 +165,8 @@ if [ $VERSION -eq '7' ]; then
 elif [ $VERSION -eq '8' ]; then
   echo "Version 8 found!  You have Jessie!"
   # If we found Jesse,
-	echo Executing: $WRAPPER "$VM" "$IMAGE" "$DOCUMENT" $IMOPTIONS
-	exec $WRAPPER "$VM" "$IMAGE" "$DOCUMENT" $IMOPTIONS
+	echo Executing: $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
+	exec $WRAPPER "$VM"  $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
 fi
 
 

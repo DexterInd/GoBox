@@ -34,12 +34,14 @@ elif [ $VERSION -eq '8' ]; then
 	echo "Version 8 found!  You have Jessie!"
 	# If we found Jesse, the proper location of the html files is in
 	VM="/usr/bin/squeak"
+	VMOPTIONS=""
 	# IMAGE="/usr/share/scratch/NuScratch02052016.image" 
 
 	if test -n "$(find /usr/share/scratch/ -maxdepth 1 -name 'NuScratch*')"
 	then
 	IMAGE=`find /usr/share/scratch/ -maxdepth 1 -name "NuScratch*" -type f`
 	fi
+	VMOPTIONS="$VMOPTIONS -vm-sound-alsa"
 	
 	IMOPTIONS=""
 	DOCUMENT=""
@@ -190,8 +192,8 @@ elif [ $VERSION -eq '8' ]; then
 	
 	if [ -f /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp ]; then
 		sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
-		echo Executing: $WRAPPER "$VM" "$IMAGE" "$DOCUMENT" $IMOPTIONS
-		exec $WRAPPER "$VM" "$IMAGE" "$DOCUMENT" $IMOPTIONS
+		echo Executing: $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
+		exec $WRAPPER "$VM" $VMOPTIONS "$IMAGE" "$DOCUMENT" $IMOPTIONS
 	else
 		sudo rm /home/pi/Desktop/GoBox/Scratch_GUI/open_scratch.tmp
 	fi
