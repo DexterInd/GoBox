@@ -14,7 +14,7 @@ import signal
 #	It will:
 # 		- First allow a user to specify which platform they want to run (GrovePi, GoPiGo, PivotPi or BrickPi)
 #		- Second kill all Scratch programs.
-#		- Third start the appropriate background program (GrovePi, GoPiGo, BrickPi)
+#		- Third start the appropriate background program (GrovePi, GoPiGo, BrickPi, PivotPi)
 # 		- Kill itself.
 #	After the program is run, /usr/bin/scratch will start Scratch, opening the file.
 
