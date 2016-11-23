@@ -12,7 +12,7 @@ import signal
 #	This program runs when a Scratch program is clicked on the desktop.
 #	It should be called by a modified script in /usr/bin/scratch to start.
 #	It will:
-# 		- First allow a user to specify which platform they want to run (GrovePi, GoPiGo, or BrickPi)
+# 		- First allow a user to specify which platform they want to run (GrovePi, GoPiGo, PivotPi or BrickPi)
 #		- Second kill all Scratch programs.
 #		- Third start the appropriate background program (GrovePi, GoPiGo, BrickPi)
 # 		- Kill itself.
@@ -90,6 +90,12 @@ def kill_all_open_processes():
 			pid = int(line.split(None, 2)[1])
 			kill_line = "sudo kill " + str(pid)
 			send_bash_command(kill_line)	
+		if 'PivotPiScratch' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)	
+
 
 ########################################################################
 class MainPanel(wx.Panel):
@@ -121,7 +127,7 @@ class MainPanel(wx.Panel):
 		#-------------------------------------------------------------------
 		# Drop Boxes
 
-		controls = ['GoPiGo', 'GrovePi', 'BrickPi']	# Options for drop down.
+		controls = ['GoPiGo', 'GrovePi', 'BrickPi', 'PivotPi']	# Options for drop down.
 
 		# Select Platform.
 		
@@ -165,7 +171,7 @@ class MainPanel(wx.Panel):
 		
 	def robotDrop(self, event):
 		write_debug("robotDrop Selected.")
-		controls = ['GoPiGo', 'GrovePi', 'BrickPi']	# Options for drop down.
+		controls = ['GoPiGo', 'GrovePi', 'BrickPi', 'PivotPi']	# Options for drop down.
 		value = event.GetSelection()
 		print controls[value]
 		# position = 0					# Position in the key list on file
@@ -191,6 +197,8 @@ class MainPanel(wx.Panel):
 				program = "/home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGoScratch.py"
 			if folder == 'GrovePi':
 				program = "/home/pi/Desktop/GrovePi/Software/Scratch/GrovePiScratch.py"
+			if folder == 'PivotPi':
+				program = "/home/pi/Dexter/PivotPi/Software/Scratch/PivotPiScratch.py"
 			start_command = "sudo python "+program
 			send_bash_command_in_background(start_command)
 		
