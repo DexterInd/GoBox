@@ -59,7 +59,7 @@ def send_bash_command_in_background(bashCommand):
 
 def internet_on():
 	try:
-		response=urllib2.urlopen('http://www.google.com', timeout=5)
+		response=urllib2.urlopen('http://www.raspberrypi.org', timeout=20)
 		return True
 	except urllib2.URLError as err: pass
 	return False
