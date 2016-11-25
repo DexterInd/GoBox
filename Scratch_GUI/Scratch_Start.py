@@ -59,7 +59,7 @@ def send_bash_command_in_background(bashCommand):
 
 def internet_on():
 	try:
-		response=urllib2.urlopen('http://www.google.com', timeout=5)
+		response=urllib2.urlopen('http://www.raspberrypi.org', timeout=20)
 		return True
 	except urllib2.URLError as err: pass
 	return False
@@ -98,7 +98,12 @@ def kill_all_open_processes():
 			pid = int(line.split(None, 2)[1])
 			kill_line = "sudo kill " + str(pid)
 			send_bash_command(kill_line)	
-
+			
+		if 'PivotPi' in line:
+			print line
+			pid = int(line.split(None, 2)[1])
+			kill_line = "sudo kill " + str(pid)
+			send_bash_command(kill_line)	
 
 ########################################################################
 class MainPanel(wx.Panel):
@@ -154,7 +159,7 @@ class MainPanel(wx.Panel):
 		#-------------------------------------------------------------------
 		# Drop Boxes
 
-		controls = ['GoPiGo', 'GrovePi', 'BrickPi', 'Just Scratch, no Robot.']	# Options for drop down.
+		controls = ['GoPiGo', 'GrovePi', 'BrickPi', 'PivotPi','Just Scratch, no Robot.']	# Options for drop down.
 
 		# Select Platform.
 		
@@ -209,7 +214,7 @@ class MainPanel(wx.Panel):
 
 	def robotDrop(self, event):
 		write_debug("robotDrop Selected.")
-		controls = ['GoPiGo', 'GrovePi', 'BrickPi', 'Just Scratch, no Robot.']	# Options for drop down.
+		controls = ['GoPiGo', 'GrovePi', 'BrickPi', 'PivotPi', 'Just Scratch, no Robot.']	# Options for drop down.
 		value = event.GetSelection()
 		print controls[value]
 		# position = 0				# Position in the key list on file
@@ -253,6 +258,8 @@ class MainPanel(wx.Panel):
 			program = "/home/pi/Desktop/BrickPi_Scratch/BrickPiScratch.py"
 		elif folder.find('GoPiGo') >= 0:
 			program = "/home/pi/Desktop/GoPiGo/Software/Scratch/GoPiGoScratch.py"
+		elif folder.find('PivotPi') >= 0:
+			program = "/home/pi/Dexter/PivotPi/Software/Scratch/PivotPiScratch.py"
 		else:
 			program = "/home/pi/Desktop/GrovePi/Software/Scratch/GrovePiScratch.py"
 		start_command = "sudo python "+program

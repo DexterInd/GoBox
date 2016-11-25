@@ -31,7 +31,7 @@ sudo chmod 777 /home/pi/Desktop/GoBox/Scratch_GUI/error_log
 sudo chmod 777 /home/pi/nohup.out
 
 # Install Scratch Example Shortcuts for the Products
-# This will creat symbolic links to the various example scripts.  https://blog.bartbania.com/raspberry_pi/create-symbolic-links-in-linux/
+# This will create symbolic links to the various example scripts.  https://blog.bartbania.com/raspberry_pi/create-symbolic-links-in-linux/
 #ln -s /home/pi/Desktop/GrovePi/Software/Scratch/Grove_Examples/ GrovePi
 #ln -s /home/pi/Desktop/GoPiGo/Software/Scratch/Examples/ GoPiGo
 #ln -s /home/pi/Desktop/BrickPi_Scratch/Examples/ BrickPi
@@ -39,7 +39,7 @@ sudo chmod 777 /home/pi/nohup.out
 # Add the soft links that allows users to reach the Dexter Ind Scratch examples from within the Scratch interface
 
 # BrickPi link
-[ ! -d /usr/share/scratch/Projects/BrickPi ]  && sudo ln -s /home/pi/Desktop/BrickPi/Examples /usr/share/scratch/Projects/BrickPi
+[ ! -d /usr/share/scratch/Projects/BrickPi ]  && sudo ln -s /home/pi/Desktop/BrickPi_Scratch/Examples /usr/share/scratch/Projects/BrickPi
 
 # GoPiGo link
 [ ! -d /usr/share/scratch/Projects/GoPiGo ]  && sudo ln -s /home/pi/Desktop/GoPiGo/Software/Scratch/Examples /usr/share/scratch/Projects/GoPiGo
@@ -47,11 +47,14 @@ sudo chmod 777 /home/pi/nohup.out
 # GrovePi Link
 [ ! -d /usr/share/scratch/Projects/GrovePi ]  && sudo ln -s /home/pi/Desktop/GrovePi/Software/Scratch/Grove_Examples /usr/share/scratch/Projects/GrovePi
 
+# PivotPi Link
+[ ! -d /usr/share/scratch/Projects/PivotPi ]  && sudo ln -s /home/pi/Dexter/PivotPi/Software/Scratch/Examples /usr/share/scratch/Projects/PivotPi
+
 
 # Remove Scratch Shortcuts if they're there.
-sudo rm /home/pi/Desktop/BrickPi_Scratch_Start.desktop
-sudo rm /home/pi/Desktop/GoPiGo_Scratch_Start.desktop
-sudo rm /home/pi/Desktop/scratch.desktop
+[ -f /home/pi/Desktop/BrickPi_Scratch_Start.desktop ] && sudo rm /home/pi/Desktop/BrickPi_Scratch_Start.desktop
+[ -f /home/pi/Desktop/GoPiGo_Scratch_Start.desktop ] && sudo rm /home/pi/Desktop/GoPiGo_Scratch_Start.desktop
+[ -f /home/pi/Desktop/scratch.desktop ] && sudo rm /home/pi/Desktop/scratch.desktop
 
 # Make sure that Scratch always starts Scratch GUI
 # We'll install these parts to make sure that if a user double-clicks on a file on the desktop
